@@ -118,7 +118,7 @@ function SearchToggle() {
   const {open} = useAside();
   return (
     <button className="reset" onClick={() => open('search')}>
-      Search
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5 12.5L17.5 17" stroke="black"/><circle cx="7.5" cy="7.5" r="7" stroke="black"/></svg>
     </button>
   );
 }
