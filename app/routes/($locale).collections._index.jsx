@@ -52,7 +52,7 @@ export default function Collections() {
 
   return (
     <div className="collections">
-      <h1>Collections</h1>
+      <h1 className="text-xl font-satoshi p-4">Collecties</h1>
       <PaginatedResourceSection
         connection={collections}
         resourcesClassName="collections-grid"
@@ -86,7 +86,7 @@ function CollectionItem({collection, index}) {
       {collection?.image && (
         <Image
           alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
+          aspectRatio="4/2"
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
         />
@@ -95,6 +95,8 @@ function CollectionItem({collection, index}) {
     </Link>
   );
 }
+/* write collections without paginatedresourcesections */
+
 
 const COLLECTIONS_QUERY = `#graphql
   fragment Collection on Collection {

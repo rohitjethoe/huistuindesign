@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import loginIcon from '~/assets/login.svg';
 
 /**
  * @param {HeaderProps}
@@ -9,9 +10,9 @@ import {useAside} from '~/components/Aside';
 export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+    <header className="flex justify-between p-4 items-center">
+      <NavLink prefetch="intent" to="/" className="font-archia text-2xl hover:no-underline" end>
+        <span class="">{shop.name}</span>
       </NavLink>
       <HeaderMenu
         menu={menu}
@@ -38,17 +39,16 @@ export function HeaderMenu({
   viewport,
   publicStoreDomain,
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
   return (
-    <nav className={className} role="navigation">
+    <nav role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
           onClick={close}
           prefetch="intent"
-          style={activeLinkStyle}
+          className="font-satoshi text-2xl"
           to="/"
         >
           Home
@@ -66,12 +66,11 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
             end
             key={item.id}
             onClick={close}
             prefetch="intent"
-            style={activeLinkStyle}
+            className="font-satoshi text-sm mx-2.5 hidden sm:inline-block"
             to={url}
           >
             {item.title}
@@ -87,12 +86,12 @@ export function HeaderMenu({
  */
 function HeaderCtas({isLoggedIn, cart}) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="flex items-center gap-2" role="navigation">
       <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
-            {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
+            {(isLoggedIn) => (isLoggedIn ? <img className="w-5 h-auto" src={loginIcon} /> : <img className="w-5 h-auto" src={loginIcon} /> )}
           </Await>
         </Suspense>
       </NavLink>
@@ -106,7 +105,7 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className="header-menu-mobile-toggle reset block sm:hidden"
       onClick={() => open('mobile')}
     >
       <h3>☰</h3>
@@ -144,7 +143,7 @@ function CartBadge({count}) {
         });
       }}
     >
-      { (count === null) ? <span>&nbsp;</span> : (count !== 0) ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 5H2.31M5.55 5L7.71 12.84C7.89029 13.4582 8.26474 14.0021 8.77799 14.3911C9.29123 14.78 9.91603 14.9936 10.56 15H19.3V5H5.55ZM12.31 18.5C12.31 19.3284 11.6384 20 10.81 20C9.98157 20 9.31 19.3284 9.31 18.5C9.31 17.6716 9.98157 17 10.81 17C11.6384 17 12.31 17.6716 12.31 18.5ZM19.31 18.5C19.31 19.3284 18.6384 20 17.81 20C16.9816 20 16.31 19.3284 16.31 18.5C16.31 17.6716 16.9816 17 17.81 17C18.6384 17 19.31 17.6716 19.31 18.5Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.1 8.5C15.4472 8.5 17.35 6.59721 17.35 4.25C17.35 1.90279 15.4472 0 13.1 0C10.7528 0 8.84998 1.90279 8.84998 4.25C8.84998 6.59721 10.7528 8.5 13.1 8.5Z" fill="#7F461B"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 5H2.31M5.55 5L7.71 12.84C7.89029 13.4582 8.26474 14.0021 8.77799 14.3911C9.29123 14.78 9.91603 14.9936 10.56 15H19.3V5H5.55ZM12.31 18.5C12.31 19.3284 11.6384 20 10.81 20C9.98157 20 9.31 19.3284 9.31 18.5C9.31 17.6716 9.98157 17 10.81 17C11.6384 17 12.31 17.6716 12.31 18.5ZM19.31 18.5C19.31 19.3284 18.6384 20 17.81 20C16.9816 20 16.31 19.3284 16.31 18.5C16.31 17.6716 16.9816 17 17.81 17C18.6384 17 19.31 17.6716 19.31 18.5Z" stroke="black" stroke-linecap="round" stroke-linejoin="round"/></svg> }
+      { (count === null) ? <span>&nbsp;</span> : (count !== 0) ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 5H2.31M5.55 5L7.71 12.84C7.89029 13.4582 8.26474 14.0021 8.77799 14.3911C9.29123 14.78 9.91603 14.9936 10.56 15H19.3V5H5.55ZM12.31 18.5C12.31 19.3284 11.6384 20 10.81 20C9.98157 20 9.31 19.3284 9.31 18.5C9.31 17.6716 9.98157 17 10.81 17C11.6384 17 12.31 17.6716 12.31 18.5ZM19.31 18.5C19.31 19.3284 18.6384 20 17.81 20C16.9816 20 16.31 19.3284 16.31 18.5C16.31 17.6716 16.9816 17 17.81 17C18.6384 17 19.31 17.6716 19.31 18.5Z" stroke="black" strokeLinecap="round" strokeLinejoin="round"/><path d="M13.1 8.5C15.4472 8.5 17.35 6.59721 17.35 4.25C17.35 1.90279 15.4472 0 13.1 0C10.7528 0 8.84998 1.90279 8.84998 4.25C8.84998 6.59721 10.7528 8.5 13.1 8.5Z" fill="#7F461B"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.31 5H2.31M5.55 5L7.71 12.84C7.89029 13.4582 8.26474 14.0021 8.77799 14.3911C9.29123 14.78 9.91603 14.9936 10.56 15H19.3V5H5.55ZM12.31 18.5C12.31 19.3284 11.6384 20 10.81 20C9.98157 20 9.31 19.3284 9.31 18.5C9.31 17.6716 9.98157 17 10.81 17C11.6384 17 12.31 17.6716 12.31 18.5ZM19.31 18.5C19.31 19.3284 18.6384 20 17.81 20C16.9816 20 16.31 19.3284 16.31 18.5C16.31 17.6716 16.9816 17 17.81 17C18.6384 17 19.31 17.6716 19.31 18.5Z" stroke="black" strokeLinecap="round" strokeLinejoin="round"/></svg> }
     </a>
   );
 }
@@ -210,7 +209,7 @@ const FALLBACK_HEADER_MENU = {
   ],
 };
 
-/**
+/** REMOVE LATER
  * @param {{
  *   isActive: boolean;
  *   isPending: boolean;

@@ -4,3 +4,8 @@
  */
 
 @import 'tailwindcss';
+
+@theme {
+    --font-family-archia: "Archia", "sans-serif";
+    --font-family-satoshi: "Satoshi", "sans-serif";
+}
